@@ -1,0 +1,48 @@
+{
+  "id": "keito.bitcrusher",
+  "name": "Bitcrusher",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Lowers the bit depth and sample rate for a lo-fi sound.",
+  "api": 1,
+  "effects": [
+    {
+      "id": "crush",
+      "name": "CRUSH",
+      "kind": "processor",
+      "slots": [
+        "master",
+        "vocal",
+        "inst"
+      ],
+      "module": "crush.js",
+      "processor": "crush",
+      "params": [
+        {
+          "id": "bits",
+          "name": "BITS",
+          "min": 1,
+          "max": 16,
+          "default": 6,
+          "step": 1
+        },
+        {
+          "id": "down",
+          "name": "DOWN",
+          "min": 1,
+          "max": 40,
+          "default": 8,
+          "step": 1
+        },
+        {
+          "id": "mix",
+          "name": "MIX",
+          "min": 0,
+          "max": 100,
+          "default": 100,
+          "unit": "%"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "keito.midi-map",
+  "name": "MIDI Map",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Maps buttons and knobs of a MIDI controller to play, hot cues and pitch.",
+  "api": 1,
+  "permissions": [
+    "midi",
+    "control"
+  ],
+  "ui": [
+    {
+      "id": "map",
+      "name": "MIDI",
+      "slot": "dj-zone",
+      "script": "map.js",
+      "style": "map.css",
+      "width": 260,
+      "height": 110
+    }
+  ]
+}

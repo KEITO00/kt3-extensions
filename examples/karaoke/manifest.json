@@ -1,0 +1,17 @@
+{
+  "id": "keito.karaoke",
+  "name": "Karaoke",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Shows the current lyric line large and fills it in time with the song.",
+  "api": 1,
+  "ui": [
+    {
+      "id": "lyrics",
+      "name": "Karaoke",
+      "slot": "overlay",
+      "script": "karaoke.js",
+      "style": "karaoke.css"
+    }
+  ]
+}

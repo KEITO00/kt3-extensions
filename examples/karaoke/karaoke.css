@@ -1,0 +1,25 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.line {
+  position: relative;
+  margin-bottom: 14vh;
+  font: 700 clamp(18px, 3.6vw, 48px) sans-serif;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .7);
+}
+
+.base {
+  color: rgba(255, 255, 255, .35);
+}
+
+.fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #5ce8d8;
+}
