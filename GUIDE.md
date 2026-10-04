@@ -39,7 +39,8 @@ document.body.appendChild(el);
 kt3.on('frame', f => { el.textContent = f.time.toFixed(1) + ' s'; });
 ```
 
-- `id` has the form `author.name` (lowercase letters, digits, `-`) so that it does not collide with other extensions.
+- `id` has the form `author.name` (lowercase letters, digits, `-`).
+  - This keeps it from colliding with other extensions.
 - Effects are described in [SPEC.md section 5](SPEC.md#5-effects) and UI in [section 6](SPEC.md#6-ui).
 
 ## 2. Try it in the Player
@@ -67,8 +68,10 @@ This creates a file such as `yourname.clock-1.0.0.kt3x`. Files and folders whose
 Share the `.kt3x` file as it is. People install it by double-clicking it (desktop version) or by dropping it on the
 record in the Player. The name, author and permissions are shown before installation.
 
-- Raise `version` for a new release. A newer version with the same `id` is treated as an update.
-- Ask only for the permissions you need. When an update adds permissions, the new ones are shown to the user.
+- Raise `version` for a new release.
+  - A newer version with the same `id` is treated as an update.
+- Ask only for the permissions you need.
+  - When an update adds permissions, the new ones are shown to the user.
 
 ## Examples
 

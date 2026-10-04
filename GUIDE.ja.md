@@ -39,7 +39,8 @@ document.body.appendChild(el);
 kt3.on('frame', f => { el.textContent = f.time.toFixed(1) + ' s'; });
 ```
 
-- `id` は `作者名.拡張機能名` の形にします（英小文字・数字・`-`）。他の人の拡張機能と重ならないようにするためです。
+- `id` は `作者名.拡張機能名` の形にします（英小文字・数字・`-`）。
+  - 他の人の拡張機能と重ならないようにするためです。
 - エフェクトの書き方は [SPEC.ja.md の 5 章](SPEC.ja.md#5-エフェクト)、UI の書き方は [6 章](SPEC.ja.md#6-ui) にあります。
 
 ## 2. Player で試す
@@ -50,7 +51,7 @@ kt3.on('frame', f => { el.textContent = f.time.toFixed(1) + ' s'; });
 
 フォルダから読み込んだ拡張機能は保存されません。Player を再起動したら、もう一度読み込んでください。
 manifest に誤りがあると、理由が表示されます。
-エフェクトの処理が重すぎる時や、UI が応えなくなった時は、Player が止めて理由を表示します（[SPEC.ja.md の 5.4](SPEC.ja.md#54-processor)、[6.1](SPEC.ja.md#61-動く環境)）。
+エフェクトの処理が重すぎる時や、UI が応答しなくなった時は、Player が停止して理由を表示します（[SPEC.ja.md の 5.4](SPEC.ja.md#54-processor)、[6.1](SPEC.ja.md#61-動く環境)）。
 
 ## 3. `.kt3x` にする
 
@@ -60,15 +61,17 @@ manifest に誤りがあると、理由が表示されます。
 node tools/pack.js my-extension
 ```
 
-`yourname.clock-1.0.0.kt3x` のような名前のファイルができます。名前が `.` で始まるファイルとフォルダは入りません。
+`yourname.clock-1.0.0.kt3x` のような名前のファイルができます。名前が `.` で始まるファイルとフォルダは含まれません。
 
 ## 4. 配る
 
 `.kt3x` をそのまま渡します。受け取った人は、ダブルクリック（デスクトップ版）か、Player のレコードへのドラッグで導入できます。
 導入の前に、名前・作者・権限が表示されます。
 
-- 新しい版を配る時は、`version` を上げます。同じ `id` の新しい版は更新として扱われます。
-- 権限は必要なものだけにします。権限が増えた更新では、増えた権限が利用者に示されます。
+- 新しい版を配る時は、`version` を上げます。
+  - 同じ `id` の新しい版は、更新として扱われます。
+- 権限は、必要なものだけにします。
+  - 権限が増えた更新では、増えた権限が利用者に示されます。
 
 ## 見本
 
@@ -77,7 +80,7 @@ node tools/pack.js my-extension
 | フォルダ | 内容 | 使う仕組み |
 |---|---|---|
 | [bitcrusher](examples/bitcrusher) | ビット数とサンプリング周波数を落とすエフェクト | 処理型のエフェクト |
-| [karaoke](examples/karaoke) | 今の歌詞を大きく表示し、次の行までの時間に合わせて塗る | UI（画面全体） |
-| [second-deck](examples/second-deck) | 2 枚目のデッキ。別の曲やボーカル・インストを載せてスクラッチできる | デッキ、`decks` 権限 |
-| [midi-map](examples/midi-map) | MIDI 機器のボタンとつまみを、再生・ホットキュー・ピッチに割り当てる | MIDI、`midi` 権限 |
-| [theme-sunset](examples/theme-sunset) | アクセント色をオレンジにする | テーマ |
+| [karaoke](examples/karaoke) | 今の歌詞を大きく表示し、次の行までの時間に合わせて塗る表示 | UI（画面全体） |
+| [second-deck](examples/second-deck) | 別の曲やボーカル・インストを載せてスクラッチできる、2 枚目のデッキ | デッキ、`decks` 権限 |
+| [midi-map](examples/midi-map) | MIDI 機器のボタンとつまみを、再生・ホットキュー・ピッチに割り当てる UI | MIDI、`midi` 権限 |
+| [theme-sunset](examples/theme-sunset) | アクセント色をオレンジにするテーマ | テーマ |

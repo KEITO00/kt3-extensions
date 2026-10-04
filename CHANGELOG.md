@@ -7,15 +7,17 @@ The `api` field of `manifest.json` is the extension API version.
 ## API 1 — KT3 Player 1.5.0
 
 - File format (ZIP), manifest and permissions (`control`, `decks`, `midi`, `network`).
-- Effects: `graph` (standard Web Audio nodes in JSON) and `processor` (AudioWorklet), with the shared playback state.
+- Effects: `graph` (standard Web Audio nodes in JSON) and `processor` (AudioWorklet).
+  - The playback state is shared with the effects.
 - UI in isolated iframes: `dj-zone`, `side-panel`, `vinyl`, `overlay`, and the `kt3` object
   (events `track`, `frame`, `spectrum`, `effects`, `decks`, `midi`, and commands).
 - Decks, MIDI and themes (CSS).
-- Effects that are too heavy and UI that stops answering are stopped automatically.
+- Automatic stop of effects that are too heavy and of UI that stops answering.
 
 - ファイル形式（ZIP）、manifest、権限（`control`・`decks`・`midi`・`network`）。
-- エフェクト：`graph`（Web Audio の標準ノードを JSON で組む）と `processor`（AudioWorklet）。再生の状態を共有する。
+- エフェクト：`graph`（Web Audio の標準ノードを JSON で組む）と `processor`（AudioWorklet）。
+  - 再生の状態を共有します。
 - 隔離した iframe で動く UI：`dj-zone`・`side-panel`・`vinyl`・`overlay` と `kt3` オブジェクト
   （情報 `track`・`frame`・`spectrum`・`effects`・`decks`・`midi` と操作）。
 - デッキ、MIDI、テーマ（CSS）。
-- 重すぎるエフェクトと、応えなくなった UI を自動で止める。
+- 重すぎるエフェクトと、応答しなくなった UI の自動停止。
