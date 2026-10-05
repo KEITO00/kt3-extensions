@@ -73,6 +73,20 @@ node tools/pack.js my-extension
 - 権限は、必要なものだけにします。
   - 権限が増えた更新では、増えた権限が利用者に示されます。
 
+## 5. 既存の部品を隠す・動かす
+
+Player の画面にもともとある部品は、テーマ（CSS）で隠したり動かしたりできます。
+
+- 隠す時は、`display: none` を指定します。
+  - 設定などで Player が表示を切り替える部品（左上の波形など）は、`display: none !important` にします。
+    - Player が要素に直接 `display` を指定しているためです。
+- 動かす時は、`order` などを指定します。
+  - DJ ゾーンの段（`.dj-rack`）は、flexbox で部品（`.dj-mod`）を並べています。
+- 部品は、中にある操作部品の ID と `:has()` で選べます（例：`.dj-mod:has(#cue-pads)`）。
+- 隠した部品の代わりは、DJ ゾーンやサイドパネルに置いた UI から、`control` の権限で操作します。
+- Player の要素の ID や class は、Player の版が変わると変わることがあります。
+  - 新しい版の Player で、見た目が崩れていないか確かめてください。
+
 ## 見本
 
 [examples](examples) に見本があります。

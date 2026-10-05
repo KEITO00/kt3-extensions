@@ -73,6 +73,20 @@ record in the Player. The name, author and permissions are shown before installa
 - Ask only for the permissions you need.
   - When an update adds permissions, the new ones are shown to the user.
 
+## 5. Hiding and moving the Player's own parts
+
+A theme (CSS) can hide or move the parts that the Player window already has.
+
+- To hide a part, set `display: none`.
+  - For parts that the Player shows or hides itself (for example the waveform at the top left), use `display: none !important`.
+    - This is because the Player sets `display` directly on these elements.
+- To move a part, use `order` and similar properties.
+  - The rows of the DJ zone (`.dj-rack`) line up their sections (`.dj-mod`) with flexbox.
+- A section can be selected by the ID of a control inside it with `:has()` (e.g. `.dj-mod:has(#cue-pads)`).
+- A UI placed in the DJ zone or the side panel can take over the hidden part through the `control` permission.
+- IDs and classes of Player elements may change between Player versions.
+  - Check that the look is still correct with new versions of the Player.
+
 ## Examples
 
 See [examples](examples).

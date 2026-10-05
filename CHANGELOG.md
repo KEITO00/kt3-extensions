@@ -13,6 +13,8 @@ The `api` field of `manifest.json` is the extension API version.
   (events `track`, `frame`, `spectrum`, `effects`, `decks`, `midi`, and commands).
 - Decks, MIDI and themes (CSS).
 - Automatic stop of effects that are too heavy and of UI that stops answering.
+- KT3 Player 1.6.0: `loops` and `loopIndex` in the `track` information.
+  - This is for tracks with several loops.
 
 - ファイル形式（ZIP）、manifest、権限（`control`・`decks`・`midi`・`network`）。
 - エフェクト：`graph`（Web Audio の標準ノードを JSON で組む）と `processor`（AudioWorklet）。
@@ -21,3 +23,5 @@ The `api` field of `manifest.json` is the extension API version.
   （情報 `track`・`frame`・`spectrum`・`effects`・`decks`・`midi` と操作）。
 - デッキ、MIDI、テーマ（CSS）。
 - 重すぎるエフェクトと、応答しなくなった UI の自動停止。
+- KT3 Player 1.6.0：情報 `track` に `loops` と `loopIndex` を追加。
+  - 複数のループを持つ曲のため。

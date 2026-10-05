@@ -257,7 +257,7 @@ UI のスクリプトからは、`window.kt3` を使います。
 
 | `type` | 届く時 | 中身 |
 |---|---|---|
-| `track` | 受け取りを始めた時と、曲を読み込んだ時・閉じた時 | `{ title, artist, duration, bpm, beats, stems, loop: { start, end }, lyrics: [{ time, text }], lyrics2 }`。曲がない時は `null` です |
+| `track` | 受け取りを始めた時と、曲を読み込んだ時・閉じた時と、曲のループが選び直された時 | `{ title, artist, duration, bpm, beats, stems, loop: { start, end }, loops: [{ start, end, name }], loopIndex, lyrics: [{ time, text }], lyrics2 }`。`loop` は選ばれている曲のループ、`loops` は曲のループの一覧（最大 10 個）、`loopIndex` は選ばれているループの番号（0 始まり）です。曲がない時は `null` です |
 | `frame` | 画面を描くたび（通常は 1 秒に 60 回） | `{ time, playing, rate, pitch, beat, loop, djLoop }`。`beat` は `{ index, phase, inBar, beats, bpm }` です（BPM がない時は `null`）。`loop` は今かかっているループの `{ start, end }` です |
 | `spectrum` | 画面を描くたび | `{ freq, wave }`。`freq` は周波数ごとの強さ（`Uint8Array`、1024 個）、`wave` は波形（`Uint8Array`、2048 個）です |
 | `effects` | 受け取りを始めた時と、自分のエフェクトが変わった時 | `[{ id, on, slot, values, error }]` |
@@ -346,20 +346,26 @@ UI のスクリプトからは、`window.kt3` を使います。
   - Player の要素の ID や class は、Player の版が変わると変わることがあります。
 - 設定の Color などで利用者が選んだ色を、テーマで変えるには `!important` が必要です。
   - これらの色は、Player が要素に直接指定しているためです。
+- 設定などで Player が表示を切り替える部品（左上の波形など）を、テーマで隠すには `!important` が必要です。
+  - これらの部品は、Player が要素に直接 `display` を指定しているためです。
 - `url()` で指せるのは、パッケージのファイル（相対パス）だけです。
   - 画像やフォント（`@font-face`）に使えます。
 - 次のものを含む CSS は読み込まれません。
   - 外部の URL、`@import`、`@namespace`、`image-set()`、バックスラッシュ（`\`）、閉じていないコメントです。
 - CSS は 200 KB までです。
 - 次の画面を表示している間は、Player がテーマを停止します。
-  - 対象は、導入・更新の確認画面、削除などの確認、Extensions の管理画面、設定画面です。
+  - 対象は、導入・更新の確認画面、削除などの確認、Extensions の管理画面です。
   - これらの画面は、テーマに関係なく Player 本来の見た目で表示されます。
+  - 設定画面では、テーマを停止しません。
+- Ctrl + Shift + E で、いつでも Extensions の管理画面を開けます。
+  - テーマで設定画面のボタンが隠されても、拡張機能を無効にしたり削除したりできるようにするためです。
 
 ## 8. 拡張機能ができないこと
 
 - PC のファイルの読み書き
   - 曲は、利用者が Player で選んだものだけを受け取ります。
-- Player の画面や設定の書き換え
+- Player の画面の中身（要素）や設定の書き換え
+  - 見た目（部品を隠す・動かす・色を変える）は、テーマ（7 章）で変えられます。
 - 許可されていない通信
 - 新しいウィンドウの表示、ダウンロード、ページの移動
 - 他の拡張機能の導入・削除
@@ -378,6 +384,7 @@ UI のスクリプトからは、`window.kt3` を使います。
   - 古い版や同じ版は、再インストールとして扱います。
 - 導入した拡張機能は、Player の中の保存領域に置きます（PC のフォルダには展開しません）。
 - 有効・無効の切り替えと削除は、設定画面の「Extensions」で行います。
+  - Ctrl + Shift + E でも、Extensions の管理画面を開けます（7 章）。
   - 削除すると、その拡張機能の保存領域（6.4）も削除されます。
 - 処理がエラーで止まったエフェクトは、Player が OFF にします。
 - 重すぎるエフェクトと、応答しなくなった UI は、Player が停止して理由を表示します（5.4、6.1）。

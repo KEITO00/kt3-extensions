@@ -256,7 +256,7 @@ UI scripts use `window.kt3`.
 
 | `type` | When | Contents |
 |---|---|---|
-| `track` | When subscribing, and when a track is loaded or closed | `{ title, artist, duration, bpm, beats, stems, loop: { start, end }, lyrics: [{ time, text }], lyrics2 }`. `null` when there is no track |
+| `track` | When subscribing, when a track is loaded or closed, and when another loop of the track is selected | `{ title, artist, duration, bpm, beats, stems, loop: { start, end }, loops: [{ start, end, name }], loopIndex, lyrics: [{ time, text }], lyrics2 }`. `loop` is the selected loop of the track, `loops` the list of its loops (up to 10) and `loopIndex` the number of the selected loop (0-based). `null` when there is no track |
 | `frame` | Every drawn frame (usually 60 times a second) | `{ time, playing, rate, pitch, beat, loop, djLoop }`. `beat` is `{ index, phase, inBar, beats, bpm }` (`null` without a BPM). `loop` is the active loop `{ start, end }` |
 | `spectrum` | Every drawn frame | `{ freq, wave }`. `freq` is the level per frequency (`Uint8Array`, 1024 values). `wave` is the waveform (`Uint8Array`, 2048 values) |
 | `effects` | When subscribing, and when one of the extension's effects changes | `[{ id, on, slot, values, error }]` |
@@ -345,20 +345,26 @@ Commands that require the `midi` permission (6.6):
   - IDs and classes of Player elements may change between Player versions.
 - A theme needs `!important` to change colors the user chose in the settings (Color and similar).
   - This is because the Player sets these colors directly on the elements.
+- A theme needs `!important` to hide parts that the Player shows or hides itself (for example the waveform at the top left, which follows a setting).
+  - This is because the Player sets `display` directly on these elements.
 - `url()` can point only to package files (relative paths).
   - It can be used for images and fonts (`@font-face`).
 - CSS that contains any of the following is not loaded.
   - External URLs, `@import`, `@namespace`, `image-set()`, backslashes (`\`) and unclosed comments.
 - The CSS can be up to 200 KB.
 - While the following screens are shown, the Player turns themes off.
-  - The installation and update dialog, other confirmations, the Extensions manager and the settings.
+  - The installation and update dialog, other confirmations and the Extensions manager.
   - These screens always appear with the Player's own look.
+  - Themes stay on in the settings.
+- Ctrl + Shift + E opens the Extensions manager at any time.
+  - This is so that extensions can still be disabled or removed even if a theme hides buttons in the settings.
 
 ## 8. What extensions cannot do
 
 - Reading or writing files on the computer
   - Audio is passed only after the user selects it in the Player.
-- Changing the Player window or settings
+- Changing the contents (elements) of the Player window or the settings
+  - The look (hiding or moving parts, changing colors) can be changed with a theme (section 7).
 - Connecting to hosts that are not allowed
 - Opening new windows, starting downloads or navigating the page
 - Installing or removing other extensions
@@ -377,6 +383,7 @@ Commands that require the `midi` permission (6.6):
   - The same or an older version is treated as a reinstallation.
 - Installed extensions are kept in the Player's own storage (they are not extracted to folders on the computer).
 - Extensions are enabled, disabled and removed from "Extensions" in the settings.
+  - Ctrl + Shift + E also opens the Extensions manager (section 7).
   - Removing an extension also removes its storage (6.4).
 - When an effect processor stops with an error, the Player turns the effect OFF.
 - Effects that are too heavy and UI that stops answering are stopped by the Player, and the reason is shown (5.4, 6.1).
