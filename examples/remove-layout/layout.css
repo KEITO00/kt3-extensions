@@ -1,0 +1,40 @@
+.player-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "deck controls";
+  align-items: center;
+  padding: 0 4vw;
+  box-sizing: border-box;
+}
+
+.center-row {
+  grid-area: deck;
+  width: 100%;
+}
+
+.controls {
+  grid-area: controls;
+  margin-top: 0;
+}
+
+.vinyl-area {
+  width: min(40vw, 70vh);
+  height: min(40vw, 70vh);
+}
+
+.vinyl-area .vinyl-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.eq-canvas,
+.center-row .lyrics-display,
+.seek-area,
+.time-display,
+#dj-racks,
+#viz-corner,
+#keys-btn,
+#beat-lamps,
+.vol-row {
+  display: none !important;
+}

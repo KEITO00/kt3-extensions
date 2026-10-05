@@ -84,6 +84,7 @@ A theme (CSS) can hide or move the parts that the Player window already has.
   - The rows of the DJ zone (`.dj-rack`) line up their sections (`.dj-mod`) with flexbox.
 - A section can be selected by the ID of a control inside it with `:has()` (e.g. `.dj-mod:has(#cue-pads)`).
 - A UI placed in the DJ zone or the side panel can take over the hidden part through the `control` permission.
+- See [remove-layout](examples/remove-layout) for an example.
 - IDs and classes of Player elements may change between Player versions.
   - Check that the look is still correct with new versions of the Player.
 
@@ -98,3 +99,4 @@ See [examples](examples).
 | [second-deck](examples/second-deck) | A second deck for another track or the vocal or instrumental audio, with scratching | Decks, `decks` permission |
 | [midi-map](examples/midi-map) | Maps MIDI buttons and knobs to play, hot cues and pitch | MIDI, `midi` permission |
 | [theme-sunset](examples/theme-sunset) | Changes the accent color to orange | Theme |
+| [remove-layout](examples/remove-layout) | Keeps only the record and the play buttons, hides the other parts and rearranges the layout | Theme (hiding and moving parts) |

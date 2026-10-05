@@ -84,6 +84,7 @@ Player の画面にもともとある部品は、テーマ（CSS）で隠した�
   - DJ ゾーンの段（`.dj-rack`）は、flexbox で部品（`.dj-mod`）を並べています。
 - 部品は、中にある操作部品の ID と `:has()` で選べます（例：`.dj-mod:has(#cue-pads)`）。
 - 隠した部品の代わりは、DJ ゾーンやサイドパネルに置いた UI から、`control` の権限で操作します。
+- 見本は [remove-layout](examples/remove-layout) です。
 - Player の要素の ID や class は、Player の版が変わると変わることがあります。
   - 新しい版の Player で、見た目が崩れていないか確かめてください。
 
@@ -98,3 +99,4 @@ Player の画面にもともとある部品は、テーマ（CSS）で隠した�
 | [second-deck](examples/second-deck) | 別の曲やボーカル・インストを載せてスクラッチできる、2 枚目のデッキ | デッキ、`decks` 権限 |
 | [midi-map](examples/midi-map) | MIDI 機器のボタンとつまみを、再生・ホットキュー・ピッチに割り当てる UI | MIDI、`midi` 権限 |
 | [theme-sunset](examples/theme-sunset) | アクセント色をオレンジにするテーマ | テーマ |
+| [remove-layout](examples/remove-layout) | レコードと再生ボタンだけを残し、ほかの部品を隠して配置を組み替えるテーマ | テーマ（部品を隠す・動かす） |
