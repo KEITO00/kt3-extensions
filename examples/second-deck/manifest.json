@@ -1,0 +1,23 @@
+{
+  "id": "keito.second-deck",
+  "name": "Second Deck",
+  "version": "1.0.3",
+  "author": "keitodaze",
+  "description": "A second deck. Load another track or the vocal or instrumental audio of the current one, and scratch it by dragging.",
+  "api": 1,
+  "permissions": [
+    "decks",
+    "control"
+  ],
+  "ui": [
+    {
+      "id": "deck",
+      "name": "Deck B",
+      "slot": "dj-zone",
+      "script": "deck.js",
+      "style": "deck.css",
+      "width": 420,
+      "height": 150
+    }
+  ]
+}

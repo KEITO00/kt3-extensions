@@ -1,0 +1,11 @@
+{
+  "id": "keito.theme-sunset",
+  "name": "Sunset",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Changes the accent color to orange.",
+  "api": 1,
+  "theme": {
+    "style": "sunset.css"
+  }
+}

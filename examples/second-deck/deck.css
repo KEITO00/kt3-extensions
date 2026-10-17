@@ -1,0 +1,67 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: #5ce8d8;
+  font: 12px monospace;
+}
+
+.platter {
+  width: 120px;
+  height: 120px;
+  flex: none;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #111 0 3px, #1c1c1c 3px 5px);
+  border: 2px solid #5ce8d8;
+  box-sizing: border-box;
+  position: relative;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.platter:active {
+  cursor: grabbing;
+}
+
+.platter::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 4px;
+  height: 22px;
+  margin-left: -2px;
+  background: #5ce8d8;
+}
+
+.side {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.title {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.buttons {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+button {
+  background: none;
+  border: 2px solid #5ce8d8;
+  color: #5ce8d8;
+  font: inherit;
+  padding: 3px 8px;
+  cursor: pointer;
+}

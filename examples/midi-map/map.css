@@ -1,0 +1,14 @@
+body {
+  height: 100vh;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: #5ce8d8;
+  font: 12px monospace;
+}
+
+.last {
+  color: #9fdcd3;
+}
