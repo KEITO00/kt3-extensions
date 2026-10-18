@@ -101,7 +101,7 @@ main スクリプトは Player の画面の中で動作するため、表示も�
   - 追加する場所を `data-part` の名前で指定すると、Player の版が変わっても同じ部品を特定できます（例：`document.querySelector('[data-part="center"]')`）。
 - CSS は、`kt3x.text('main.css')` で読み込み、`<style>` 要素に追加してください。
   - CSS は Player の画面全体に適用されるため、セレクターには `kt3x-` で始まる class などを使用してください。
-  - 色に `var(--accent)` を使用すると、利用者が設定したアクセント色に合わせることができます。
+  - 色に `var(--accent)` を使用すると、利用者が設定したアクセント色に合わせられます。
 - Player を操作する場合は、Player のボタンを押すか、フェーダーの値を変更して `input` イベントを送ってください。
   - Player の操作部品を使用した場合と、同じ動作になります。
   - 例：`document.getElementById('btn-play').click()`
