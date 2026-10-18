@@ -1,0 +1,9 @@
+{
+  "id": "keito.stage-view",
+  "name": "Stage View",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Replaces the record and lyrics with a large view of the cover, the current lyric and the whole waveform (click to seek). STAGE or Alt+V switches the view.",
+  "api": 2,
+  "main": "view.js"
+}

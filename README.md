@@ -6,11 +6,11 @@
 
 Specification of extensions (`.kt3x`) for [KT3 Player](https://github.com/KEITO00/kt3-player).
 
-> Extensions are supported from KT3 Player 1.5.0.
+> Extensions are supported from KT3 Player 1.5.0. API 2 is supported from KT3 Player 1.8.3.
 
-An extension can add audio effects, UI, and themes to KT3 Player. Extensions run inside
-the Player with limited access: they cannot read files on the computer, and they can connect
-to external hosts only with the user's permission.
+An extension can add audio effects, themes and a main script to KT3 Player.
+A main script runs inside the Player and can use everything in it, so the Player shows a warning
+before installing an extension that has one.
 
 ### Documents
 
@@ -23,9 +23,8 @@ to external hosts only with the user's permission.
 ### What an extension can add
 
 - Audio effects on the vocal track, the instrumental track or the whole mix
-- Displays and controls in the DJ zone, on the record, over the window or in a side panel
 - Themes: colors, layout, images and fonts
-- With permission: control of the Player, additional decks, network access to listed hosts, MIDI devices
+- Main scripts (API 2): any display or control in the Player window, and anything else the Player and the browser can do
 
 ### License
 
@@ -37,10 +36,11 @@ You can make and distribute extensions without asking for permission. See [LICEN
 
 [KT3 Player](https://github.com/KEITO00/kt3-player) の拡張機能（`.kt3x`）の仕様です。
 
-> 拡張機能は KT3 Player 1.5.0 以降で使えます。
+> 拡張機能は KT3 Player 1.5.0 以降で使えます。API 2 は KT3 Player 1.8.3 以降で使えます。
 
-拡張機能を使うと、KT3 Player にエフェクト・UI・テーマを追加できます。拡張機能は Player の中で、
-できることを制限した状態で動きます。PC のファイルは読めず、外部との通信は利用者が許可した場合だけできます。
+拡張機能を使うと、KT3 Player にエフェクト・テーマ・main スクリプトを追加できます。
+main スクリプトは Player の中で動き、Player の中のすべてを使えます。そのため、main スクリプトを持つ拡張機能は、
+導入の前に Player が注意を表示します。
 
 ### 文書
 
@@ -53,9 +53,8 @@ You can make and distribute extensions without asking for permission. See [LICEN
 ### 拡張機能で追加できるもの
 
 - エフェクト（ボーカル・インスト・全体のどこかにかける）
-- 表示や操作部品（DJ ゾーン、レコードの上、画面全体、横のパネル）
 - テーマ（色・配置・画像・フォント）
-- 権限を許可した場合：Player の操作、デッキの追加、指定したサイトとの通信、MIDI 機器
+- main スクリプト（API 2）：Player の画面の表示や操作、そのほか Player とブラウザでできること全般
 
 ### ライセンス
 

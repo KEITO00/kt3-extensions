@@ -1,0 +1,115 @@
+.kt3x-stage {
+  display: none;
+  width: 100%;
+  height: 340px;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 84px;
+  gap: 16px 32px;
+  padding: 8px 24px;
+  box-sizing: border-box;
+  color: #e8f4f2;
+  font-family: "Segoe UI", "Noto Sans JP", sans-serif;
+}
+
+body.kt3x-stage-on .kt3x-stage {
+  display: grid;
+}
+
+body.kt3x-stage-on [data-part="center"] > :not(.kt3x-stage) {
+  display: none !important;
+}
+
+.kt3x-stage-btn.on {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.kt3x-stage .art {
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f2a33, #2a5753 60%, var(--accent));
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+}
+
+.kt3x-stage .art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kt3x-stage .initial {
+  font-size: 72px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .85);
+}
+
+.kt3x-stage .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.kt3x-stage .title {
+  font-size: 38px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kt3x-stage .artist {
+  font-size: 20px;
+  color: #7f9a96;
+  margin-top: 4px;
+}
+
+.kt3x-stage .meta {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 14px;
+  font: 15px monospace;
+  color: var(--accent);
+}
+
+.kt3x-stage .beats {
+  display: flex;
+  gap: 6px;
+}
+
+.kt3x-stage .beats span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+}
+
+.kt3x-stage .beats span.on {
+  background: var(--accent);
+}
+
+.kt3x-stage .lyric {
+  margin-top: 24px;
+  font-size: 28px;
+  font-weight: 600;
+  min-height: 1.3em;
+}
+
+.kt3x-stage .next {
+  margin-top: 6px;
+  font-size: 17px;
+  color: #7f9a96;
+  min-height: 1.3em;
+}
+
+.kt3x-stage .wave {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}

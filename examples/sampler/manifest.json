@@ -1,0 +1,9 @@
+{
+  "id": "keito.sampler",
+  "name": "Sampler",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Three sound pads (kick, clap and horn) in the DJ zone. The sounds are made by the extension and played on extra decks. SYNC waits for the next 16th note. Alt+1, 2, 3 play the pads.",
+  "api": 2,
+  "main": "pads.js"
+}

@@ -1,0 +1,122 @@
+{
+  "id": "keito.fx-pack",
+  "name": "FX Pack",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Four effects: a dub echo and a phaser built from Web Audio nodes, and a stutter and a slicer that follow the beat of the track.",
+  "api": 2,
+  "effects": [
+    {
+      "id": "dub",
+      "name": "DUB ECHO",
+      "kind": "graph",
+      "slots": ["master", "vocal", "inst"],
+      "nodes": {
+        "hp": { "type": "biquad", "filter": "highpass", "frequency": 180, "Q": 0.7 },
+        "dl": { "type": "delay", "maxDelay": 4, "delayTime": 0.375 },
+        "dr": { "type": "delay", "maxDelay": 4, "delayTime": 0.375 },
+        "fb1": { "type": "gain", "gain": 0.5 },
+        "fb2": { "type": "gain", "gain": 0.5 },
+        "lp": { "type": "biquad", "filter": "lowpass", "frequency": 3500, "Q": 0.6 },
+        "sat": { "type": "waveshaper", "shape": "tanh", "drive": 1.5 },
+        "pl": { "type": "panner", "pan": -0.8 },
+        "pr": { "type": "panner", "pan": 0.8 },
+        "wet": { "type": "gain", "gain": 0.45 }
+      },
+      "connect": [
+        ["in", "out"],
+        ["in", "hp"], ["hp", "dl"],
+        ["dl", "pl"], ["pl", "wet"],
+        ["dl", "fb1"], ["fb1", "lp"], ["lp", "sat"], ["sat", "dr"],
+        ["dr", "pr"], ["pr", "wet"],
+        ["dr", "fb2"], ["fb2", "dl"],
+        ["wet", "out"]
+      ],
+      "params": [
+        { "id": "time", "name": "TIME", "min": 0.25, "max": 2, "step": 0.25, "default": 0.75, "unit": "beat",
+          "map": [
+            { "node": "dl", "param": "delayTime", "curve": "beats", "from": 0.25, "to": 2 },
+            { "node": "dr", "param": "delayTime", "curve": "beats", "from": 0.25, "to": 2 }
+          ] },
+        { "id": "feedback", "name": "FEEDBACK", "min": 0, "max": 100, "default": 50, "unit": "%",
+          "map": [
+            { "node": "fb1", "param": "gain", "from": 0, "to": 0.9 },
+            { "node": "fb2", "param": "gain", "from": 0, "to": 0.9 }
+          ] },
+        { "id": "tone", "name": "TONE", "min": 0, "max": 100, "default": 55, "unit": "%",
+          "map": [{ "node": "lp", "param": "frequency", "curve": "exp", "from": 600, "to": 12000 }] },
+        { "id": "mix", "name": "MIX", "min": 0, "max": 100, "default": 45, "unit": "%",
+          "map": [{ "node": "wet", "param": "gain", "from": 0, "to": 1 }] }
+      ]
+    },
+    {
+      "id": "phaser",
+      "name": "PHASER",
+      "kind": "graph",
+      "slots": ["master", "vocal", "inst"],
+      "nodes": {
+        "a1": { "type": "biquad", "filter": "allpass", "frequency": 900, "Q": 0.7 },
+        "a2": { "type": "biquad", "filter": "allpass", "frequency": 900, "Q": 0.7 },
+        "a3": { "type": "biquad", "filter": "allpass", "frequency": 900, "Q": 0.7 },
+        "a4": { "type": "biquad", "filter": "allpass", "frequency": 900, "Q": 0.7 },
+        "lfo": { "type": "oscillator", "wave": "sine", "frequency": 0.35 },
+        "depth": { "type": "gain", "gain": 600 },
+        "wet": { "type": "gain", "gain": 1 }
+      },
+      "connect": [
+        ["in", "out"],
+        ["in", "a1"], ["a1", "a2"], ["a2", "a3"], ["a3", "a4"], ["a4", "wet"], ["wet", "out"],
+        ["lfo", "depth"],
+        ["depth", "a1.frequency"], ["depth", "a2.frequency"], ["depth", "a3.frequency"], ["depth", "a4.frequency"]
+      ],
+      "params": [
+        { "id": "rate", "name": "RATE", "min": 0, "max": 100, "default": 30, "unit": "%",
+          "map": [{ "node": "lfo", "param": "frequency", "curve": "exp", "from": 0.05, "to": 6 }] },
+        { "id": "depth", "name": "DEPTH", "min": 0, "max": 100, "default": 60, "unit": "%",
+          "map": [{ "node": "depth", "param": "gain", "from": 0, "to": 1400 }] },
+        { "id": "center", "name": "CENTER", "min": 0, "max": 100, "default": 40, "unit": "%",
+          "map": [
+            { "node": "a1", "param": "frequency", "curve": "exp", "from": 250, "to": 3000 },
+            { "node": "a2", "param": "frequency", "curve": "exp", "from": 250, "to": 3000 },
+            { "node": "a3", "param": "frequency", "curve": "exp", "from": 250, "to": 3000 },
+            { "node": "a4", "param": "frequency", "curve": "exp", "from": 250, "to": 3000 }
+          ] },
+        { "id": "res", "name": "RES", "min": 0, "max": 100, "default": 30, "unit": "%",
+          "map": [
+            { "node": "a1", "param": "Q", "from": 0.3, "to": 6 },
+            { "node": "a2", "param": "Q", "from": 0.3, "to": 6 },
+            { "node": "a3", "param": "Q", "from": 0.3, "to": 6 },
+            { "node": "a4", "param": "Q", "from": 0.3, "to": 6 }
+          ] },
+        { "id": "mix", "name": "MIX", "min": 0, "max": 100, "default": 100, "unit": "%",
+          "map": [{ "node": "wet", "param": "gain", "from": 0, "to": 1 }] }
+      ]
+    },
+    {
+      "id": "stutter",
+      "name": "STUTTER",
+      "kind": "processor",
+      "slots": ["master", "vocal", "inst"],
+      "module": "stutter.js",
+      "processor": "stutter",
+      "params": [
+        { "id": "len", "name": "LEN", "min": 1, "max": 4, "step": 1, "default": 2 },
+        { "id": "mix", "name": "MIX", "min": 0, "max": 100, "default": 100, "unit": "%" },
+        { "id": "rev", "name": "REVERSE", "control": "toggle" }
+      ]
+    },
+    {
+      "id": "slicer",
+      "name": "SLICER",
+      "kind": "processor",
+      "slots": ["master", "vocal", "inst"],
+      "module": "slicer.js",
+      "processor": "slicer",
+      "params": [
+        { "id": "pattern", "name": "PATTERN", "min": 1, "max": 4, "step": 1, "default": 1 },
+        { "id": "depth", "name": "DEPTH", "min": 0, "max": 100, "default": 100, "unit": "%" },
+        { "id": "smooth", "name": "SMOOTH", "min": 1, "max": 30, "default": 4, "unit": "ms" }
+      ]
+    }
+  ]
+}

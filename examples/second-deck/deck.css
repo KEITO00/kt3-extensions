@@ -1,21 +1,21 @@
-body {
-  height: 100vh;
-  display: flex;
+.kt3x-deck {
   align-items: center;
   gap: 14px;
-  padding: 0 10px;
-  box-sizing: border-box;
-  color: #5ce8d8;
+  color: var(--accent);
   font: 12px monospace;
 }
 
-.platter {
+.kt3x-deck[hidden] {
+  display: none;
+}
+
+.kt3x-deck .platter {
   width: 120px;
   height: 120px;
   flex: none;
   border-radius: 50%;
   background: repeating-radial-gradient(circle, #111 0 3px, #1c1c1c 3px 5px);
-  border: 2px solid #5ce8d8;
+  border: 2px solid var(--accent);
   box-sizing: border-box;
   position: relative;
   cursor: grab;
@@ -23,11 +23,11 @@ body {
   user-select: none;
 }
 
-.platter:active {
+.kt3x-deck .platter:active {
   cursor: grabbing;
 }
 
-.platter::after {
+.kt3x-deck .platter::after {
   content: '';
   position: absolute;
   left: 50%;
@@ -35,32 +35,32 @@ body {
   width: 4px;
   height: 22px;
   margin-left: -2px;
-  background: #5ce8d8;
+  background: var(--accent);
 }
 
-.side {
+.kt3x-deck .side {
   display: grid;
   gap: 6px;
   min-width: 0;
 }
 
-.title {
+.kt3x-deck .title {
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.buttons {
+.kt3x-deck .buttons {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
 }
 
-button {
+.kt3x-deck button {
   background: none;
-  border: 2px solid #5ce8d8;
-  color: #5ce8d8;
+  border: 2px solid var(--accent);
+  color: var(--accent);
   font: inherit;
   padding: 3px 8px;
   cursor: pointer;

@@ -1,10 +1,10 @@
 {
   "id": "keito.bitcrusher",
   "name": "Bitcrusher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "keitodaze",
   "description": "Lowers the bit depth and sample rate for a lo-fi sound.",
-  "api": 1,
+  "api": 2,
   "effects": [
     {
       "id": "crush",

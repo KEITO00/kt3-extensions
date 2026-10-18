@@ -1,0 +1,9 @@
+{
+  "id": "keito.dj-console",
+  "name": "DJ Console",
+  "version": "1.0.0",
+  "author": "keitodaze",
+  "description": "Replaces the DJ zone with a new layout of deck buttons, hot cues, beat loops, a 3-band mixer and BEAT FX. CONSOLE switches the view. Alt+Q, W, E kill. Hold Alt+A to censor.",
+  "api": 2,
+  "main": "console.js"
+}

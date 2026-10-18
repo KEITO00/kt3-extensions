@@ -1,10 +1,10 @@
 {
   "id": "keito.remove-layout",
   "name": "Remove Layout",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "keitodaze",
   "description": "Keeps only the record and the play buttons, and hides the other parts of the Player window.",
-  "api": 1,
+  "api": 2,
   "theme": {
     "style": "layout.css"
   }

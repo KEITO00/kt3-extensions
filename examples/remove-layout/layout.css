@@ -1,4 +1,7 @@
-.player-wrap {
+/* Keeps only the record and the play buttons, side by side.
+   The selectors use data-part names, which stay the same between Player versions. */
+
+[data-part="player"] {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas: "deck controls";
@@ -7,34 +10,36 @@
   box-sizing: border-box;
 }
 
-.center-row {
+[data-part="center"] {
   grid-area: deck;
   width: 100%;
 }
 
-.controls {
+[data-part="transport"] {
   grid-area: controls;
   margin-top: 0;
 }
 
-.vinyl-area {
+[data-part="record"] {
   width: min(40vw, 70vh);
   height: min(40vw, 70vh);
 }
 
-.vinyl-area .vinyl-canvas {
+[data-part="record"] canvas {
   width: 100%;
   height: 100%;
 }
 
-.eq-canvas,
-.center-row .lyrics-display,
-.seek-area,
-.time-display,
-#dj-racks,
-#viz-corner,
-#keys-btn,
-#beat-lamps,
-.vol-row {
+[data-part="spectrum-left"],
+[data-part="spectrum-right"],
+[data-part="lyrics-left"],
+[data-part="lyrics-right"],
+[data-part="seekbar"],
+[data-part="time"],
+[data-part="dj-zone"],
+[data-part="waveform"],
+[data-part="keys-button"],
+[data-part="beat-lamps"],
+[data-part="volume"] {
   display: none !important;
 }

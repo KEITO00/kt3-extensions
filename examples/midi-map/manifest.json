@@ -1,23 +1,9 @@
 {
   "id": "keito.midi-map",
   "name": "MIDI Map",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "keitodaze",
-  "description": "Maps buttons and knobs of a MIDI controller to play, hot cues and pitch.",
-  "api": 1,
-  "permissions": [
-    "midi",
-    "control"
-  ],
-  "ui": [
-    {
-      "id": "map",
-      "name": "MIDI",
-      "slot": "dj-zone",
-      "script": "map.js",
-      "style": "map.css",
-      "width": 260,
-      "height": 110
-    }
-  ]
+  "description": "Connects the buttons and knobs of a MIDI controller to the Player (play, cue, censor, brake, hot cues, pitch, filter, EQ and volume). Pads light up while a hot cue is set.",
+  "api": 2,
+  "main": "map.js"
 }

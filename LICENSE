@@ -15,7 +15,9 @@ without asking for permission. When you share or adapt the documents themselves,
 
 This license covers the specification only. It does not cover:
 
-- the KT3 Player application, which has its own terms;
+- the KT3 Player application, which has its own terms. Those terms allow reading the
+  Player's page code (HTML, JavaScript and CSS) and changing the Player with a main script
+  in order to make extensions;
 - extensions made by others, which belong to their authors;
 - the names "KT3" and "KT3 Player". You may say that your extension is "for KT3 Player",
   but please do not use these names in a way that suggests your extension is official
@@ -38,7 +40,9 @@ examples フォルダの見本の拡張機能は、MIT ライセンスで公開�
 
 このライセンスが対象とするのは仕様だけです。次のものは対象外です。
 
-- KT3 Player（KT3 Player の利用規約に従います）
+- KT3 Player（KT3 Player の利用規約に従います。拡張機能を作るために、Player の画面のプログラム
+  （HTML・JavaScript・CSS）を読むことと、main スクリプトで Player の画面や動作を変えることは、
+  その利用規約で認めています）
 - 他の人が作った拡張機能（その作成者に帰属します）
 - 「KT3」「KT3 Player」という名前。「KT3 Player 用」と書くことはできますが、
   あなたの拡張機能が公式である、または keitodaze が作った、と誤解されるような使い方はしないでください。

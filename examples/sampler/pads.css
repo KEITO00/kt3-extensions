@@ -1,0 +1,47 @@
+.kt3x-sampler {
+  align-items: stretch;
+  gap: 8px;
+  height: 64px;
+  font: 600 12px "Segoe UI", sans-serif;
+  color: #cfe3e0;
+}
+
+.kt3x-sampler[hidden] {
+  display: none;
+}
+
+.kt3x-sampler button {
+  width: 92px;
+  font: inherit;
+  letter-spacing: 1px;
+  color: inherit;
+  background: #0d1418;
+  border: 1px solid #1e3a36;
+  border-radius: 6px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.kt3x-sampler button:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.kt3x-sampler button.hit {
+  background: var(--accent);
+  color: #031414;
+}
+
+.kt3x-sampler button.sync {
+  width: 64px;
+}
+
+.kt3x-sampler button.sync.on {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.kt3x-sampler input {
+  width: 120px;
+  accent-color: var(--accent);
+}

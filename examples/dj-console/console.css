@@ -1,0 +1,149 @@
+.kt3x-console {
+  display: none;
+  gap: 14px;
+  justify-content: center;
+  align-items: stretch;
+  height: 300px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  color: #dfeeed;
+  font: 12px "Segoe UI", sans-serif;
+}
+
+body.kt3x-console-on .kt3x-console {
+  display: flex;
+}
+
+body.kt3x-console-on [data-part="dj-zone"] > :not(.kt3x-console) {
+  display: none !important;
+}
+
+.kt3x-console-btn.on {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.kt3x-console section {
+  background: rgba(8, 12, 16, .85);
+  border: 1px solid #1e3a36;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kt3x-console h2 {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #7f9a96;
+  font-weight: 600;
+}
+
+.kt3x-console button {
+  font: 600 12px "Segoe UI", sans-serif;
+  letter-spacing: 1px;
+  color: #cfe3e0;
+  background: #0d1418;
+  border: 1px solid #1e3a36;
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.kt3x-console button.on {
+  color: #031414;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.kt3x-console button.kill.on, .kt3x-console button.hot {
+  color: #fff;
+  background: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.kt3x-console .grid {
+  display: grid;
+  gap: 6px;
+}
+
+.kt3x-console .row {
+  display: flex;
+  gap: 6px;
+}
+
+.kt3x-console .pads {
+  grid-template-columns: repeat(4, 64px);
+}
+
+.kt3x-console .pads button {
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.kt3x-console .pads small {
+  font: 10px monospace;
+  opacity: .8;
+}
+
+.kt3x-console .loops {
+  grid-template-columns: repeat(4, 52px);
+}
+
+.kt3x-console .fx {
+  grid-template-columns: repeat(3, 76px);
+}
+
+.kt3x-console .deck {
+  grid-template-columns: repeat(2, 78px);
+}
+
+.kt3x-console .faders {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.kt3x-console .fader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 0;
+}
+
+.kt3x-console .fader label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #7f9a96;
+}
+
+.kt3x-console .fader output {
+  font: 11px monospace;
+  color: var(--accent);
+}
+
+.kt3x-console input[type=range] {
+  accent-color: var(--accent);
+}
+
+.kt3x-console input.v {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  flex: 1;
+  min-height: 60px;
+  width: 22px;
+}
+
+.kt3x-console input.h {
+  width: 170px;
+}

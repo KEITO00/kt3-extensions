@@ -2,7 +2,7 @@
 
 日本語版: [SPEC.ja.md](SPEC.ja.md)
 
-> Extensions are supported from KT3 Player 1.5.0.
+> Extensions are supported from KT3 Player 1.5.0. API 2 (3.1) is supported from KT3 Player 1.8.3.
 
 This document describes the file format of extensions for
 [KT3 Player](https://github.com/KEITO00/kt3-player) (`.kt3x`) and what extensions can do.
@@ -15,11 +15,13 @@ An extension can add the following. One extension can contain several of them.
 
 | Kind | Description |
 |---|---|
-| Effect | An audio effect. It is inserted on the vocal track, the instrumental track or the whole mix |
-| UI | Displays and controls added to the Player window |
-| Theme | The look of the Player (colors, layout, images, fonts) |
+| Effect | An audio effect (section 4) |
+| Theme | CSS that changes the look of the Player (section 5) |
+| Main script | JavaScript that runs in the Player window (section 6) |
 
-Extensions run in both the desktop version and the browser version.
+- Effects and themes work only within their defined formats.
+- A main script can use everything in the Player.
+- Extensions run in both the desktop version and the browser version.
 
 ## 2. File
 
@@ -45,35 +47,31 @@ Extensions run in both the desktop version and the browser version.
 | `name` | Yes | Display name |
 | `version` | Yes | Version in the form `x.y.z` |
 | `author` | Yes | Author name |
-| `description` | Yes | Short description |
-| `api` | Yes | Extension API version (integer). The current version is `1` |
+| `description` | Yes | Short description (up to 200 characters) |
+| `api` | Yes | Extension API version used (3.1) |
 | `icon` | No | Path to an icon image (PNG) |
-| `permissions` | No | Permissions used (section 4) |
-| `effects` | No | List of effects (section 5) |
-| `ui` | No | List of UI parts (section 6) |
-| `theme` | No | Theme (section 7) |
+| `effects` | No | List of effects (section 4) |
+| `theme` | No | Theme (section 5) |
+| `main` | No | Path to the main script (JavaScript) (section 6). API 2 |
 
-The Player shows names, authors and descriptions as plain text, never as HTML.
+- A manifest with a field that is not in this table cannot be installed. The Player shows the reason.
+- The Player shows names, authors and descriptions as plain text, never as HTML.
 
-## 4. Permissions
+### 3.1 API versions
 
-Effects, UI and themes work without permissions. The following features are available only
-when they are listed in `permissions` and the user allows them at installation.
+`api` is `1` or `2`. The current version is `2`.
 
-| Permission | Description |
-|---|---|
-| `control` | Control of the Player (play, seek, cue, loops, pitch, FX, etc.) |
-| `decks` | Additional decks and loading audio into them |
-| `network` | Connections to external hosts. The host names are listed (e.g. `{"network": ["lyrics.example.com"]}`). There is no way to allow all hosts |
-| `midi` | Use of MIDI devices. SysEx is not available |
+- Only extensions with `"api": 2` can use `main`.
+- Extensions with `"api": 1` that contain only effects and themes keep working.
+- Extensions that use `ui` or `permissions` from API 1 cannot be installed.
+  - The Player shows the reason.
+  - Rewrite the UI as a main script (section 6).
 
-When an update adds permissions, the Player shows the new permissions and asks again.
-
-## 5. Effects
+## 4. Effects
 
 An extension can list up to 8 effects in `effects`.
 
-### 5.1 Common fields
+### 4.1 Common fields
 
 | Field | Required | Description |
 |---|---|---|
@@ -89,7 +87,7 @@ An extension can list up to 8 effects in `effects`.
   - The controls are an ON button, a slot selector and the parameters.
 - Effects are OFF after installation and when a track is loaded.
 
-### 5.2 Parameters
+### 4.2 Parameters
 
 | Field | Required | Description |
 |---|---|---|
@@ -100,9 +98,9 @@ An extension can list up to 8 effects in `effects`.
 | `default` | No | Initial value. The default is `min` |
 | `step` | No | Step size. The default is continuous |
 | `unit` | No | Unit shown after the value (up to 8 characters) |
-| `map` | For `graph` | Which node values the parameter controls (5.3) |
+| `map` | For `graph` | Which node values the parameter controls (4.3) |
 
-### 5.3 `graph`
+### 4.3 `graph`
 
 An effect built from standard Web Audio nodes.
 
@@ -153,7 +151,7 @@ An effect built from standard Web Audio nodes.
 | `exp` | `from × (to / from) ^ x` (`from` and `to` must be positive) |
 | `beats` | `from` and `to` are beats, converted to seconds with the track's BPM and pitch. The value follows BPM and pitch changes |
 
-### 5.4 `processor`
+### 4.4 `processor`
 
 Audio processing written as an AudioWorklet.
 
@@ -197,143 +195,7 @@ Audio processing written as an AudioWorklet.
   - Line numbers in error messages are one larger.
   - `registerProcessor` inside the module is provided by the Player. It wraps the registered class to measure its time.
 
-## 6. UI
-
-An extension can list up to 8 UI parts in `ui`.
-
-| Field | Required | Description |
-|---|---|---|
-| `id` | Yes | UI ID |
-| `name` | Yes | Name (up to 24 characters) |
-| `slot` | Yes | Placement (table below) |
-| `script` | Yes | Path to the UI script (JavaScript) |
-| `style` | No | Path to a CSS file |
-| `width` | No | Width (`dj-zone` only; 80 to 480, default 240) |
-| `height` | No | Height (`dj-zone` and `side-panel`; 40 to 400, default 120) |
-
-| `slot` | Placement | Input |
-|---|---|---|
-| `dj-zone` | The extension row of the DJ zone | Yes |
-| `side-panel` | A panel opened from a tab at the right edge | Yes |
-| `vinyl` | Over the record (same size as the record) | No (display only) |
-| `overlay` | Over the whole window | No (display only) |
-
-### 6.1 Environment
-
-- UI runs in an iframe that contains an empty page prepared by the Player.
-  - The iframe uses `sandbox="allow-scripts"` (origin `null`).
-  - New windows, navigation, downloads and forms are not available.
-  - The camera, microphone, clipboard, location and similar features are not available.
-- The Player passes the package files to the iframe, then loads `style` and `script` in that order.
-  - The script builds the page.
-  - The background is transparent.
-- Text selection and dragging (the browser's drag and drop) are turned off.
-  - This is so that dragging with the mouse reaches the script as pointer events.
-  - To make text selectable, set `user-select: text` in your CSS.
-- The UI page MUST keep answering the Player's signal.
-  - A UI that does not answer for 3 seconds is removed by the Player, and the reason is shown.
-  - A page that keeps running heavy work cannot answer.
-- The effect of heavy UI on the Player's window depends on the version.
-  - In the desktop version, UI runs in a different process from the Player, so the Player's window does not freeze.
-  - In the browser version, some browsers run UI in the same process, so heavy UI work also freezes the Player's window.
-- Network access is possible only to hosts allowed by the `network` permission (`https://` only).
-  - Everything else can be loaded only from package files (`kt3.file()`) or `data:`.
-
-### 6.2 The `kt3` object
-
-UI scripts use `window.kt3`.
-
-| Name | Description |
-|---|---|
-| `kt3.on(type, fn)` | Starts receiving information (6.3) |
-| `kt3.off(type, fn)` | Stops receiving information |
-| `kt3.send(cmd, args)` | Asks the Player to run a command (6.4). Returns a Promise with the result |
-| `kt3.file(path)` | URL of a package file (for `img.src` and similar). `null` if the file does not exist |
-| `kt3.text(path)` | Contents of a text file in the package |
-| `kt3.info` | `{ id, name, version, slot, permissions }` |
-
-### 6.3 Information
-
-| `type` | When | Contents |
-|---|---|---|
-| `track` | When subscribing, when a track is loaded or closed, and when another loop of the track is selected | `{ title, artist, duration, bpm, beats, stems, loop: { start, end }, loops: [{ start, end, name }], loopIndex, lyrics: [{ time, text }], lyrics2 }`. `loop` is the selected loop of the track, `loops` the list of its loops (up to 10) and `loopIndex` the number of the selected loop (0-based). `null` when there is no track |
-| `frame` | Every drawn frame (usually 60 times a second) | `{ time, playing, rate, pitch, beat, loop, djLoop }`. `beat` is `{ index, phase, inBar, beats, bpm }` (`null` without a BPM). `loop` is the active loop `{ start, end }` |
-| `spectrum` | Every drawn frame | `{ freq, wave }`. `freq` is the level per frequency (`Uint8Array`, 1024 values). `wave` is the waveform (`Uint8Array`, 2048 values) |
-| `effects` | When subscribing, and when one of the extension's effects changes | `[{ id, on, slot, values, error }]` |
-| `decks` | Every drawn frame (while the extension has decks) | `[{ id, loaded, time, duration, playing, rate, volume, title }]` |
-| `midi` | When a MIDI message arrives (requires the `midi` permission) | `{ input, data, time }`. `data` is an array of bytes. SysEx is not delivered. `{ devices }` arrives when subscribing and when devices are connected or disconnected (6.6) |
-
-### 6.4 Commands
-
-Commands available without permissions:
-
-| `cmd` | `args` | Description |
-|---|---|---|
-| `effect` | `{ effect, on?, slot? }` | Turns the extension's own effect on or off and chooses its slot |
-| `param` | `{ effect, param, value }` | Sets a parameter of the extension's own effect (clamped to its range) |
-| `storage.get` | `{ key }` | Reads from the extension's storage |
-| `storage.set` | `{ key, value }` | Writes to the storage (`null` removes the key). Up to 256 KB per extension |
-
-Commands that require the `control` permission (only while a track is loaded):
-
-| `cmd` | `args` | Description |
-|---|---|---|
-| `play`, `pause` | none | Play or pause |
-| `seek` | `{ time }` | Move to a position (seconds) |
-| `hotcue` | `{ index }` | Press a hot cue (0 to 7) |
-| `loop` | `{ beats }` | Beat loop (0.25, 0.5, 1, 2, 4, 8 or 16 beats) |
-| `loopExit` | none | Exit the loop |
-| `beatJump` | `{ direction }` | Beat jump (negative to jump back) |
-| `pitch` | `{ percent }` | Pitch (clamped to the current pitch range) |
-| `fx` | `{ type }` | BEAT FX (`off` `echo` `gate` `reverb` `rvbout` `filtout` `rollout`) |
-| `brake`, `spin` | none | BRAKE or SPIN |
-| `stem` | `{ which, volume }` | Volume (0 to 1) of the main deck's vocal (`vocal`) or instrumental (`inst`) audio. Only for tracks with separate vocal and instrumental audio |
-
-Commands that require the `decks` permission (6.5):
-
-| `cmd` | `args` | Description |
-|---|---|---|
-| `deck.create` | none | Creates a deck and returns its number (up to 3 per extension) |
-| `deck.load` | `{ deck, source }` | Loads audio. `source` is `pick` (the user chooses a file), `main` (the whole current track), `vocal` or `inst` (its vocal or instrumental audio). Returns `{ title, artist, bpm, duration, stems }` |
-| `deck.play`, `deck.pause` | `{ deck }` | Play or pause |
-| `deck.seek` | `{ deck, time }` | Move to a position (seconds) |
-| `deck.rate` | `{ deck, rate, smooth? }` | Playback rate (-8 to 8). With `smooth: true`, the rate changes smoothly and the scratch resampling is used (sound above the audible range is removed instead of folding back) |
-| `deck.loop` | `{ deck, start, end }` or `{ deck, off: true }` | Loop (sample-accurate and gapless) |
-| `deck.volume` | `{ deck, value }` | Volume (0 to 2) |
-| `deck.destroy` | `{ deck }` | Removes the deck |
-
-Commands that require the `midi` permission (6.6):
-
-| `cmd` | `args` | Description |
-|---|---|---|
-| `midi.devices` | none | Returns `{ inputs, outputs }`. Each is `[{ id, name, manufacturer, state }]` |
-| `midi.send` | `{ output, data }` | Sends to a MIDI device. `data` must be a channel message (1 to 3 bytes, first byte 0x80 to 0xEF) |
-
-- Each UI can send up to 120 commands per second.
-  - Commands above the limit fail.
-- The Promise of a failed command is rejected with an Error that gives the reason.
-
-### 6.5 Decks
-
-- Decks use the same playback processor as the Player's main deck.
-  - Their audio enters before the `master` slot (5.1).
-  - It does not pass through the Player's EQ, filter, BEAT FX or BASS BOOST.
-- With `pick`, the Player shows a file dialog.
-  - Only the audio of the `.kt3` / `.kt4` file that the user chooses is loaded. The extension receives neither the file location nor its contents.
-  - The dialog can be shown only right after the user interacts with the UI.
-  - If no file is chosen, the command fails with `cancelled`.
-- `vocal`, `inst` and `main` use the audio of the current track (it is not copied).
-- The decks of an extension are removed when the extension is disabled or removed.
-
-### 6.6 MIDI
-
-- UI cannot use Web MIDI directly.
-  - The Player connects to MIDI devices and passes the messages on.
-- The Player connects to MIDI devices only when a UI with the `midi` permission starts receiving `midi`.
-- SysEx can be neither received nor sent.
-- In the browser version, the browser may ask the user whether to allow MIDI.
-
-## 7. Themes
+## 5. Themes
 
 `theme` names one CSS file.
 
@@ -343,6 +205,7 @@ Commands that require the `midi` permission (6.6):
 
 - The CSS is added to the Player window as it is.
   - IDs and classes of Player elements may change between Player versions.
+  - To select parts, a theme SHOULD use the `data-part` names (5.1).
 - A theme needs `!important` to change colors the user chose in the settings (Color and similar).
   - The Player sets these colors directly on the elements.
 - A theme needs `!important` to hide parts that the Player shows or hides itself (for example the waveform at the top left, which follows a setting).
@@ -359,36 +222,148 @@ Commands that require the `midi` permission (6.6):
 - Ctrl + Shift + E opens the Extensions manager at any time.
   - This is so that extensions can still be disabled or removed even if a theme hides buttons in the settings.
 
-## 8. What extensions cannot do
+### 5.1 `data-part` names
 
-- Reading or writing files on the computer
-  - Audio is passed only after the user selects it in the Player.
-- Changing the contents (elements) of the Player window or the settings
-  - The look (hiding or moving parts, changing colors) can be changed with a theme (section 7).
-- Connecting to hosts that are not allowed
-- Opening new windows, starting downloads or navigating the page
-- Installing or removing other extensions
-- Using the camera, microphone, clipboard or location
+The main parts of the Player have `data-part` names (KT3 Player 1.8.3 and later). These names stay the same between Player versions.
 
-## 9. Installation and management (Player behavior)
+```css
+[data-part="dj-zone"] { display: none !important; }
+```
+
+| Name | Part |
+|---|---|
+| `player` | The main area of the Player (from the record to the DJ zone) |
+| `center` | The row of the record, lyrics and spectrum |
+| `record` | Record |
+| `lyrics-left`, `lyrics-right` | Lyrics |
+| `spectrum-left`, `spectrum-right` | Spectrum |
+| `seekbar` | Seek bar |
+| `time` | Time display |
+| `transport` | Row of play buttons |
+| `title` | Track title |
+| `volume` | Volume |
+| `waveform` | Waveform at the top left |
+| `beat-lamps` | Beat lamps |
+| `top-buttons` | Buttons at the top right |
+| `keys-button`, `settings-button` | Keyboard and settings buttons |
+| `dj-zone` | DJ zone |
+| `dj-row-1` to `dj-row-4` | Rows of the DJ zone |
+| `pitch`, `deck-buttons`, `filter` | Parts of the DJ zone (row 1) |
+| `hotcues`, `loop`, `beatjump`, `slip` | Parts of the DJ zone (row 2) |
+| `beatloop`, `loop-length`, `loop-target`, `quantize` | Parts of the DJ zone (row 3) |
+| `eq`, `bass-boost`, `stems`, `beat-fx` | Parts of the DJ zone (row 4) |
+| `ext-effects` | Row of extension effects |
+
+- Elements inside these parts have no names.
+  - Select them from a named part, as in `[data-part="record"] canvas`.
+- The Player draws the record and spectrum at the position of their parts.
+  - Hiding them with `display: none` also stops the drawing.
+
+## 6. Main script
+
+The JavaScript named in `main` runs in the Player window. It can use everything in the Player.
+
+```json
+{ "id": "yourname.clock", "name": "Clock", "version": "1.0.0", "author": "yourname",
+  "description": "Shows the playback position.", "api": 2, "main": "main.js" }
+```
+
+```js
+const el = document.createElement('div');
+el.style.cssText = 'position:fixed;right:20px;bottom:20px;color:var(--accent);font:24px monospace;z-index:240';
+document.body.appendChild(el);
+(function tick() {
+  el.textContent = waBuffer ? curPos().toFixed(1) + ' s' : '';
+  requestAnimationFrame(tick);
+})();
+```
+
+### 6.1 How it runs
+
+- The main script runs once when the extension is loaded.
+  - Extensions are loaded when the Player starts, when they are installed and when they are enabled.
+  - When it runs, the effects and theme of the same extension are already loaded.
+- The main script runs in the same place as the Player window.
+  - It can use the elements of the Player window, the Player's functions and variables, and browser features such as network access and Web MIDI, without limits.
+- The whole script runs inside a function.
+  - Variables and functions declared at its top level are not visible to other scripts.
+  - Declaring a name that the Player also uses hides the Player's one inside the script.
+- To add CSS, create a `<style>` element and add it to `document.head`.
+  - The CSS applies to the whole Player window.
+  - Selectors SHOULD use names that only the extension uses (for example classes that start with `kt3x-`).
+- The Player's accent color is available as the CSS variable `--accent`.
+
+### 6.2 The `kt3x` object
+
+Main scripts can use `kt3x`.
+
+| Name | Description |
+|---|---|
+| `kt3x.info` | `{ id, name, version }` |
+| `kt3x.file(path)` | URL of a package file (for `img.src` and similar) |
+| `kt3x.text(path)` | Contents of a text file in the package |
+| `kt3x.storage.get(key)` | Reads from the storage. Returns the stored value, or `null` if there is none |
+| `kt3x.storage.set(key, value)` | Writes to the storage. `null` removes the key |
+
+- `kt3x.file()` and `kt3x.text()` throw an error for a file that is not in the package.
+- The storage takes values that can be converted to JSON.
+  - It holds up to 256 KB per extension. Writing more throws an error.
+  - Leaving out `value` throws an error.
+  - Removing the extension also removes its storage.
+- The Player window has a variable `kt3` for the loaded track, so the object for extensions is named `kt3x`.
+
+### 6.3 Errors
+
+- When an error occurs in the first run of the main script, the extension is treated as not loaded.
+  - Its effects and theme are removed too.
+  - The Extensions manager shows the reason and the line number.
+- When an error occurs in the main script after it has loaded, the Player shows the error.
+  - Unhandled Promise rejections are treated the same way.
+  - The Extensions manager shows it too.
+- The Player does not hide errors or switch to other behavior.
+
+### 6.4 Names that stay and names that may change
+
+- The following stay the same between Player versions.
+  - The format of the manifest, effects and themes
+  - `kt3x`
+  - The `data-part` names (5.1)
+- Everything else may change between Player versions.
+  - This includes the names and behavior of the Player's functions and variables, and the IDs, classes and order of elements.
+  - When an extension stops working because of such a change, its author updates it.
+
+### 6.5 Disabling and removing
+
+- What a main script has done cannot be undone while the Player runs.
+- So the Player reloads when an extension with a main script is disabled, removed or updated.
+  - Before disabling or removing, the Player asks the user to confirm the reload.
+- "Reload" for an extension loaded from a folder in developer mode also reloads the Player.
+  - In the desktop version, the same folder is loaded again automatically after the reload.
+  - In the browser version, choose the folder again after the reload.
+
+## 7. Installation and management (Player behavior)
 
 - An extension can be installed in three ways.
   - Double-clicking a `.kt3x` file (desktop version)
   - Dropping it on the record
   - "Extensions" → "Install from file" in the settings
-- Before installation, the Player shows the name, author, version, ID, description, permissions and contents (number of effects and UI parts), and asks the user to confirm.
+- Before installation, the Player shows the name, author, version, ID, description and contents (number of effects, theme, main script), and asks the user to confirm.
+  - For a main script, the Player shows the following warnings.
+    - It can use everything in the Player, including the audio of the tracks that are opened.
+    - It can connect to the network and send data.
+    - It may stop working when the Player is updated.
   - The Player also states that the author is not verified.
 - A newer version with the same `id` is treated as an update.
-  - Permissions added by the update are marked.
   - The same or an older version is treated as a reinstallation.
 - Installed extensions are kept in the Player's own storage (they are not extracted to folders on the computer).
 - Extensions are enabled, disabled and removed from "Extensions" in the settings.
-  - Ctrl + Shift + E also opens the Extensions manager (section 7).
-  - Removing an extension also removes its storage (6.4).
-- When an effect processor stops with an error, the Player turns the effect OFF.
-- Effects that are too heavy and UI that stops answering are stopped by the Player, and the reason is shown (5.4, 6.1).
-- With "Start without extensions" turned on in the settings, all extensions are turned off from the next start.
-- If the Player did not start normally while extensions were loading, it asks at the next start whether to turn them off.
-- With "Extension developer mode" turned on, "Extensions" → "Load folder" loads an extension from a folder.
-  - Such an extension is not saved.
-  - It can be loaded again with "Reload".
+  - Ctrl + Shift + E also opens the Extensions manager (section 5).
+  - Removing an extension also removes its storage (6.2).
+- When an effect stops with an error, the Player turns it OFF.
+- The Player stops effects that are too heavy and shows the reason (4.4).
+- With "Start without extensions" on in the settings, all extensions are turned off from the next start.
+  - Main scripts do not run either.
+- If the Player did not start normally while extensions were loading, it asks at the next start whether to turn extensions off.
+- With "Extension developer mode" on in the settings, "Extensions" → "Load folder" loads an extension from a folder.
+  - An extension loaded from a folder is not saved.
+  - "Reload" loads it again (6.5).

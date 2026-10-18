@@ -4,6 +4,28 @@ The `api` field of `manifest.json` is the extension API version.
 
 `manifest.json` の `api` は、拡張機能 API の版を表します。
 
+## API 2 (KT3 Player 1.8.3)
+
+- Main scripts: `main` in the manifest names a JavaScript file that runs in the Player window and can use everything in the Player.
+  - Main scripts use the `kt3x` object (`info`, `file`, `text`, `storage`).
+  - The Player shows a warning before installing an extension with a main script.
+  - Disabling, removing or updating such an extension reloads the Player.
+- UI (`ui`, `kt3.on`, `kt3.off`, `kt3.send`) and permissions (`permissions`) were removed.
+  - Extensions that use them cannot be installed, and the Player shows the reason.
+  - Extensions with `"api": 1` that contain only effects and themes keep working.
+- Themes can select parts by `data-part` names, which stay the same between Player versions.
+- A manifest with a field that is not in the specification cannot be installed.
+
+- main スクリプト：manifest の `main` に書いた JavaScript が Player の画面の中で動き、Player の中のすべてを使えるようにしました。
+  - main スクリプトでは、`kt3x`（`info`・`file`・`text`・`storage`）を使えます。
+  - main スクリプトを持つ拡張機能は、導入の前に Player が注意を表示します。
+  - 無効にする時・削除する時・更新する時は、Player を再読み込みします。
+- UI（`ui`・`kt3.on`・`kt3.off`・`kt3.send`）と権限（`permissions`）をなくしました。
+  - これらを使う拡張機能は導入できず、Player が理由を表示します。
+  - `"api": 1` の拡張機能のうち、エフェクトとテーマだけのものは、そのまま動きます。
+- テーマで、Player の版が変わっても変わらない `data-part` の名前を使えるようにしました。
+- 仕様にない項目がある manifest は、導入できないようにしました。
+
 ## API 1 (KT3 Player 1.5.0)
 
 - File format (ZIP), manifest and permissions (`control`, `decks`, `midi`, `network`).
