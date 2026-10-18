@@ -120,6 +120,25 @@ A main script runs in the Player window, so it can build any display and any con
 - These are internal names of the Player, so they may change between Player versions ([SPEC.md 6.4](SPEC.md#64-names-that-stay-and-names-that-may-change)).
 - See [stage-view](examples/stage-view) and [dj-console](examples/dj-console) for examples.
 
+### Reading the Player's code
+
+For the variables, functions and element IDs that a main script uses, refer to the code of the web version of the Player (https://kt3.keitodaze.jp/). The desktop version uses the same code.
+
+- Open the web version in a browser and see it in "Sources" of the developer tools (F12).
+- In "Console" of the developer tools, the Player's variables and functions can be tried directly (e.g. `kt3`, `curPos()`).
+
+| File | Contents |
+|---|---|
+| `index.html` | The HTML and CSS of the window, and almost all of the Player's JavaScript |
+| `extensions.js` | Loading extensions (manifest checks, effects, themes) |
+| `deck-worklet.js` | Audio playback (decks) |
+| `ktc.js` | Reading KTC audio |
+
+- The web version may be updated before the desktop version.
+  - The version is shown at the bottom of the settings. Check that it is the same as the Player you test the extension with.
+- The KT3 Player terms (section 3 (2)) allow reading this code to make extensions.
+  - The code cannot be included in an extension (section 3 (3)).
+
 ## Examples
 
 See [examples](examples).

@@ -1,9 +1,6 @@
 // Stage View: a large now-playing view in the center of the Player.
 // It reads the Player's state directly: kt3 (the loaded track), curPos(), waveformPeaks, hotCues,
 // cuePoint, segAt() and pitchRate, and seeks with waSeek(). STAGE or Alt+V switches the view.
-const JA = /^ja\b/i.test(navigator.language || '');
-const TEXT = JA ? { empty: '曲を読み込んでください', pitch: 'ピッチ' } : { empty: 'Load a track', pitch: 'PITCH' };
-
 const style = document.createElement('style');
 style.textContent = kt3x.text('view.css');
 document.head.appendChild(style);
@@ -61,7 +58,7 @@ function setTrack(t) {
   layersFor = null;
   if (artUrl) { URL.revokeObjectURL(artUrl); artUrl = null; }
   const m = t ? t.meta || {} : {};
-  title.textContent = t ? m.title || 'Untitled' : TEXT.empty;
+  title.textContent = t ? m.title || 'Untitled' : 'Load a track';
   artist.textContent = t ? m.artist || '' : '';
   if (t && t.thumbnailData && t.thumbnailData.byteLength) artUrl = URL.createObjectURL(new Blob([t.thumbnailData], { type: 'image/webp' }));
   img.hidden = !artUrl;
@@ -133,7 +130,7 @@ function tick() {
   const g = segAt(now);
   bpm.textContent = g && g.beat > 0 ? (60 / g.beat).toFixed(1) + ' BPM' : '';
   const pct = (pitchRate - 1) * 100;
-  pitch.textContent = TEXT.pitch + ' ' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+  pitch.textContent = 'PITCH ' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
   const n = g && g.beat > 0 ? g.beats : 0;
   if (beats.children.length !== n) beats.replaceChildren(...Array.from({ length: n }, () => document.createElement('span')));
   if (n) {

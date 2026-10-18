@@ -36,25 +36,25 @@ You can make and distribute extensions without asking for permission. See [LICEN
 
 [KT3 Player](https://github.com/KEITO00/kt3-player) の拡張機能（`.kt3x`）の仕様です。
 
-> 拡張機能は KT3 Player 1.5.0 以降で使えます。API 2 は KT3 Player 1.8.3 以降で使えます。
+> 拡張機能は KT3 Player 1.5.0 以降で使用できます。API 2 は KT3 Player 1.8.3 以降で使用できます。
 
-拡張機能を使うと、KT3 Player にエフェクト・テーマ・main スクリプトを追加できます。
-main スクリプトは Player の中で動き、Player の中のすべてを使えます。そのため、main スクリプトを持つ拡張機能は、
-導入の前に Player が注意を表示します。
+拡張機能を使用すると、KT3 Player にエフェクト・テーマ・main スクリプトを追加できます。
+main スクリプトは Player の中で動作し、Player のすべての機能を使用できます。そのため、main スクリプトを含む拡張機能を
+導入する前に、Player が注意を表示します。
 
 ### 文書
 
-- [GUIDE.ja.md](GUIDE.ja.md)：作り方（[English](GUIDE.md)）
+- [GUIDE.ja.md](GUIDE.ja.md)：拡張機能の作り方（[English](GUIDE.md)）
 - [SPEC.ja.md](SPEC.ja.md)：仕様（[English](SPEC.md)）
 - [examples](examples)：見本の拡張機能
-- [CHANGELOG.md](CHANGELOG.md)：API の版ごとの変更
-- [tools/pack.js](tools/pack.js)：フォルダから `.kt3x` を作る（`node tools/pack.js <フォルダ>`、Node.js が必要）
+- [CHANGELOG.md](CHANGELOG.md)：API の版ごとの変更点
+- [tools/pack.js](tools/pack.js)：フォルダから `.kt3x` を作成する（`node tools/pack.js <フォルダ>`、Node.js が必要）
 
 ### 拡張機能で追加できるもの
 
-- エフェクト（ボーカル・インスト・全体のどこかにかける）
+- エフェクト（ボーカル・インスト・全体のいずれかにかける）
 - テーマ（色・配置・画像・フォント）
-- main スクリプト（API 2）：Player の画面の表示や操作、そのほか Player とブラウザでできること全般
+- main スクリプト（API 2）：Player の画面の表示や操作のほか、Player とブラウザで実行できる処理全般
 
 ### ライセンス
 

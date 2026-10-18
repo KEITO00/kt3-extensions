@@ -16,14 +16,14 @@ The `api` field of `manifest.json` is the extension API version.
 - Themes can select parts by `data-part` names, which stay the same between Player versions.
 - A manifest with a field that is not in the specification cannot be installed.
 
-- main スクリプト：manifest の `main` に書いた JavaScript が Player の画面の中で動き、Player の中のすべてを使えるようにしました。
-  - main スクリプトでは、`kt3x`（`info`・`file`・`text`・`storage`）を使えます。
-  - main スクリプトを持つ拡張機能は、導入の前に Player が注意を表示します。
-  - 無効にする時・削除する時・更新する時は、Player を再読み込みします。
-- UI（`ui`・`kt3.on`・`kt3.off`・`kt3.send`）と権限（`permissions`）をなくしました。
-  - これらを使う拡張機能は導入できず、Player が理由を表示します。
-  - `"api": 1` の拡張機能のうち、エフェクトとテーマだけのものは、そのまま動きます。
-- テーマで、Player の版が変わっても変わらない `data-part` の名前を使えるようにしました。
+- main スクリプト：manifest の `main` に指定した JavaScript が Player の画面の中で動作し、Player のすべての機能を使用できるようにしました。
+  - main スクリプトでは、`kt3x`（`info`・`file`・`text`・`storage`）を使用できます。
+  - main スクリプトを含む拡張機能を導入する前に、Player が注意を表示します。
+  - このような拡張機能の無効化・削除・更新の際は、Player を再読み込みします。
+- UI（`ui`・`kt3.on`・`kt3.off`・`kt3.send`）と権限（`permissions`）を廃止しました。
+  - これらを使用する拡張機能は導入できず、Player が理由を表示します。
+  - `"api": 1` の拡張機能のうち、エフェクトとテーマだけを含むものは、引き続き動作します。
+- テーマで、Player の版が変わっても変更されない `data-part` の名前を使用できるようにしました。
 - 仕様にない項目がある manifest は、導入できないようにしました。
 
 ## API 1 (KT3 Player 1.5.0)
@@ -39,9 +39,9 @@ The `api` field of `manifest.json` is the extension API version.
   - This is for tracks with several loops.
 
 - ファイル形式（ZIP）、manifest、権限（`control`・`decks`・`midi`・`network`）。
-- エフェクト：`graph`（Web Audio の標準ノードを JSON で組む）と `processor`（AudioWorklet）。
+- エフェクト：`graph`（Web Audio の標準ノードを JSON で構成する）と `processor`（AudioWorklet）。
   - エフェクトと再生の状態を共有します。
-- 隔離した iframe で動く UI：`dj-zone`・`side-panel`・`vinyl`・`overlay` と `kt3` オブジェクト
+- 隔離した iframe で動作する UI：`dj-zone`・`side-panel`・`vinyl`・`overlay` と `kt3` オブジェクト
   （情報 `track`・`frame`・`spectrum`・`effects`・`decks`・`midi` と操作）。
 - デッキ、MIDI、テーマ（CSS）。
 - 重すぎるエフェクトと、応答しなくなった UI の自動停止。
